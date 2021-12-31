@@ -15,9 +15,9 @@ public class MainEx {
 	public static void main(String[] args) {
 		MainEx mainEx = new MainEx();
 		
-		//mainEx.saveEmployee("Mukesh", "CEO", 100000, 893965);
-		//mainEx.saveEmployee("Ravi", "Manager", 50000, 996654);
-		//mainEx.saveEmployee("Amit", "PM", 45000, 93445);
+		mainEx.saveEmployee("Mukesh", "CEO", 100000, 893965);
+		mainEx.saveEmployee("Ravi", "Manager", 50000, 996654);
+		mainEx.saveEmployee("Amit", "PM", 45000, 93445);
 		mainEx.retriveEmployee(); 
 	}
 	
