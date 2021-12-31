@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="com.jwt.hibernate.entity.Department" table="DEPTCRUD">
+        <id name="deptId" type="integer" column="deptId">
+            <generator class="increment" />
+        </id>
+        <property name="name" type="string" column="NAME" not-null="true" />
+        <property name="strength" type="integer" column="STRENGTH" not-null="true" />
+       
+    </class>
+</hibernate-mapping>
