@@ -19,12 +19,70 @@ public class MainEx {
 		//mainEx.saveDept("sales", 25);
 		//mainEx.saveDept("IT", 63);
 		//mainEx.saveDept("DB", 87);
-		mainEx.retriveDept();
+		//mainEx.retriveDept();
 		
 		//mainEx.saveEmployee("Mukesh", "CEO", 100000, 893965);
 		//mainEx.saveEmployee("Ravi", "Manager", 50000, 996654);
 		//mainEx.saveEmployee("Amit", "PM", 45000, 93445);
-		//mainEx.retriveEmployee(); 
+		//mainEx.retriveEmployee();
+		//mainEx.deleteEmployee();
+		mainEx.updateEmployee();
+	}
+	
+	public void updateEmployee() {
+
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			String queryString = "from Employee where sal = :sal";
+			Query query = session.createQuery(queryString);
+			query.setInteger("sal", 50000);
+			Employee employee = (Employee) query.uniqueResult();
+			
+			
+			employee.setSal(60000);
+			session.update(employee);
+			System.out.println("Employee records updated!");
+			transaction.commit();
+		} catch (HibernateException e) {
+
+			transaction.rollback();
+
+			e.printStackTrace();
+
+		} finally {
+
+			session.close();
+
+		}
+	}
+	
+	public void deleteEmployee() {
+
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			String queryString = "from Employee where phone = :phone and name = :name";
+			Query query = session.createQuery(queryString);
+			query.setInteger("phone", 893965);
+			query.setString("name", "Amit Annmmm");
+			Employee employee = (Employee) query.uniqueResult();
+			session.delete(employee);
+			System.out.println("Employee records deleted!");
+			transaction.commit();
+		} catch (HibernateException e) {
+
+			transaction.rollback();
+
+			e.printStackTrace();
+
+		} finally {
+
+			session.close();
+
+		}
 	}
 	
 	public void saveEmployee(String name, String city, int sal, int phone) {
@@ -58,14 +116,18 @@ public class MainEx {
         Transaction transaction = null;
         try {
             transaction = session.beginTransaction();
-            List employee = session.createQuery("from Employee").list();
+            List<Employee> empList = session.createQuery("from Employee").list();
  
-            for (Iterator iterator = employee.iterator(); iterator.hasNext();) {
+            for(Employee e : empList ) {
+            	System.out.println(e.getEmpId()  + " " + e.getName() + " " + e.getCity() +
+            			" " +e.getPhone() + " " + e.getSal());
+            }
+            /**for (Iterator iterator = employee.iterator(); iterator.hasNext();) {
                 Employee employee1 = (Employee) iterator.next();
                 System.out.println(employee1.getName() + "  "
                         + employee1.getCity() + "  " + employee1.getSal()
                         + "   " + employee1.getPhone());
-            }
+            }*/
             transaction.commit();
  
         } catch (HibernateException e) {
@@ -121,7 +183,7 @@ public class MainEx {
                 
                 List<Department> deptList = session.createQuery("from Department").list();
                 for(Department dept : deptList) {
-                	System.out.println("Dept Id - " + dept.getDeptId());
+                	System.out.println(dept.getDeptId() + "  " + dept.getName()+ " " + dept.getStrength());
                 }
                 
                 transaction.commit();

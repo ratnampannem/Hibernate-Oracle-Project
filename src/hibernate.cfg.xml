@@ -13,5 +13,6 @@
         <property name="show_sql">true</property>
         <property name="format_sql">true</property>
         <mapping resource="com/jwt/hibernate/entity/Employee.hbm.xml" />
+        <mapping resource="com/jwt/hibernate/entity/Department.hbm.xml" />
     </session-factory>
 </hibernate-configuration>
