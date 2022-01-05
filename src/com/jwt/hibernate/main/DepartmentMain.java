@@ -1,9 +1,11 @@
 package com.jwt.hibernate.main;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
@@ -18,9 +20,9 @@ public class DepartmentMain {
 		deptMain.saveDepartment("Megha", 64);
 		deptMain.saveDepartment("Sasi", 21);*/
 		
-		//deptMain.deleteDepartment();
+		deptMain.deleteDepartment();
 		//deptMain.retriveDepartment();
-		deptMain.updateDepartment();
+		//deptMain.updateDepartment();
 	}
 	
 	private void updateDepartment() {
@@ -31,6 +33,8 @@ public class DepartmentMain {
 			String queryString = "from Department where strength= :strength";
 			Query query = session.createQuery(queryString);
 			query.setInteger("strength", 63);
+			//Department department = (Department) query.uniqueResult();
+			//session.update(department);
 			List<Department> deptList = (List<Department>) query.list();
 			for(Department dept : deptList) {
 				dept.setStrength(15);
@@ -52,8 +56,8 @@ public class DepartmentMain {
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			String strQuery = "from Department where name = :name";
-			Query query = session.createQuery(strQuery);
+			String queryString = "from Department where name = :name";
+			Query query = session.createQuery(queryString);
 			query.setString("name","Sasi" );
 			Department department = (Department) query.uniqueResult();
 			session.delete(department);
@@ -96,10 +100,22 @@ public class DepartmentMain {
 		try {
 			
 			//transaction = session.beginTransaction();
-			List<Department> deptList = session.createQuery("from Department").list();
+			/**List<Department> deptList = session.createQuery("from Department").list();
 			for(Department dept : deptList) {
 				System.out.println(dept.getDeptId() + " " + dept.getName() + " " + dept.getStrength());
+			}*/
+			
+			SQLQuery query = session.createSQLQuery("select deptId, name from DEPTCRUD");
+			List<Object[]> rows = query.list();
+			List<Department> dList = new ArrayList<Department>();
+			for(Object[] row : rows){
+				Department d = new Department();
+				d.setDeptId(Integer.parseInt(row[0].toString()));
+				d.setName(row[1].toString());
+				dList.add(d);
 			}
+
+			
 		}catch (HibernateException e) {
 			//transaction.rollback();
 			e.printStackTrace();

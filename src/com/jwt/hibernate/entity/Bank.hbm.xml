@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.jwt.hibernate.entity.Bank" table ="BANK">
+		<id name="bankId" type="integer" column="BANK_ID">
+			<generator class="increment"/>
+		</id>
+		<property name="name" type="string" column="NAME" ></property>
+		<property name="address" type="string" column="ADDRESS" ></property>
+		<property name="ifscCode" type="string" column="IFSCCODE" ></property>
+		<set name="customers" table="Bank_Customer"
+            inverse="false" lazy="true" fetch="select" cascade="all">
+            <key column="BANK_ID" />
+            <many-to-many column="Customer_Id" class="com.jwt.hibernate.entity.Customer" />
+        </set>	
+	</class>
+
+</hibernate-mapping>

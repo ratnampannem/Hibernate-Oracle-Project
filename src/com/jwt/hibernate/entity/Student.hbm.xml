@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE hibernate-mapping PUBLIC
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="com.jwt.hibernate.entity.Student" table ="STUDENT">
+		<id name="studentId" type="integer" column="Student_Id">
+			<generator class="increment"/>
+		</id>
+		<property name="studentName" type="string" column="Student_Name" ></property>
+		<property name="branch" type="string" column="Branch" ></property>
+		<set name="books" table="Student_Book"
+            inverse="false" lazy="true" fetch="select" cascade="all">
+            <key column="Student_Id" />
+            <many-to-many column="Book_Id" class="com.jwt.hibernate.entity.Book" />
+        </set>	
+	</class>
+
+</hibernate-mapping>

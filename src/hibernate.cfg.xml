@@ -14,5 +14,10 @@
         <property name="format_sql">true</property>
         <mapping resource="com/jwt/hibernate/entity/Employee.hbm.xml" />
         <mapping resource="com/jwt/hibernate/entity/Department.hbm.xml" />
+        <mapping resource="com/jwt/hibernate/entity/Bank.hbm.xml" />
+        <mapping resource="com/jwt/hibernate/entity/Customer.hbm.xml" />
+        
+        <mapping resource="com/jwt/hibernate/entity/Student.hbm.xml" />
+        <mapping resource="com/jwt/hibernate/entity/Book.hbm.xml" />
     </session-factory>
 </hibernate-configuration>
