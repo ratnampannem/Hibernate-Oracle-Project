@@ -3,6 +3,8 @@ package com.jwt.hibernate.main;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.hibernate.HibernateException;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -17,7 +19,10 @@ public class StudentBookMapping {
 	
 	public static void main(String[] args) {
 		
-		SessionFactory sf = HibernateUtil.getSessionFactory();
+		StudentBookMapping std_book = new StudentBookMapping();
+		std_book.retriveData();
+		
+		/**SessionFactory sf = HibernateUtil.getSessionFactory();
 		Session session = sf.openSession();
 		Transaction transaction = session.beginTransaction();
 		
@@ -66,7 +71,29 @@ public class StudentBookMapping {
 		
         transaction.commit();
         session.close();
-        System.out.println("successfully persisted Student and Books details");
-		
+        System.out.println("successfully persisted Student and Books details");*/
+        
 	}
+	
+	public void retriveData() {
+		Session session = HibernateUtil.getSessionFactory().openSession();
+		Transaction transaction = null;
+		try {
+				transaction = session.beginTransaction();
+				String querySting = "from Student where student_Id = :fffffff";
+				Query query = session.createQuery(querySting);
+				query.setInteger("fffffff", 1);
+	        	Student student = (Student) query.uniqueResult();
+	        	System.out.println(student.getStudentId() + " " +student.getStudentName());
+	        	Set<Book> booksSet = student.getBooks();
+	        	for (Book book : booksSet) {
+					System.out.println(book.getBookName());
+				}
+		}catch (HibernateException e) {
+			
+			e.printStackTrace();
+		}
+   }
+	
+	
 }
